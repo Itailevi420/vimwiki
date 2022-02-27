@@ -6,7 +6,7 @@ reference
 - sysibm.
 
 
-## [sql](https://github.com/Itailevi420/vimwiki/blob/master/sql.md)
+## [sql](sql)
 
 
 VSDS = is the most important file in a database
