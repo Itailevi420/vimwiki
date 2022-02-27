@@ -1,1 +1,2 @@
 # vimwiki
+my wiki
