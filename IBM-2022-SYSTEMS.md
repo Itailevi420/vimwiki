@@ -97,6 +97,7 @@ shtelat tavim kryim
 EYE CATCHER is a readable piece in your load module that you plant on purpose
 
 ## ALL the reg info is IN THE PSW INFORMATION
+the last place the app was. is stored in the PSW in the last 4 bytes
 
 reg 1 some data on the loadmodule
 
@@ -111,3 +112,6 @@ S0c7    : translation problems
 S0c4    : is worse
 
 IPCS    : is a loadmodule that helps with finding bugs in dumps
+
+# TODO:🔛
+# LEARN ASSEMBLER NOWWWWW!!!!!!
