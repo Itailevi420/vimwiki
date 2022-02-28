@@ -112,10 +112,18 @@ S0c7    : translation problems
 S0c4    : is worse
 
 BC      : branch conditional
+
 e.g: --> BC 15,106(0,10)
+
 IPCS    : is a loadmodule that helps with finding bugs in dumps
 
 # TODO:🔛
 # LEARN ASSEMBLER NOWWWWW!!!!!!
 
 360/ assembly/360 instructions/BC
+
+
+- --> jcl lab
+- --> uss lab
+- --> z/OS lab
+- RTFM = read the fucking manual
