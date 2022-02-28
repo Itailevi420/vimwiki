@@ -3,6 +3,8 @@
                              📇 INDEX :
 
 
+IKJEFT01    : The load module of "TSO"
+
 IPL         : IPL (initial program load) is a mainframe term for the loading of
               the operating system into the computer's main memory .
               A mainframe operating system (such as OS/390) contains many
@@ -14,6 +16,12 @@ SAS/IML     : SAS/IML is an interactive matrix language that is both powerful
               operate is a row by column matrix. Therefore, single elementwise
               operators such as + and / can operate on many data values to
               produce many results
+
+RACF        :
+
+SYS1.
+
+3270 data stream
 
                       ## MAINFRAME OPERATING SYSTEMS:💻
             - z/OS
@@ -64,8 +72,42 @@ SMF             : "Systems Management Facility" Activity Reporting
 
 USS             : Unix Services
 
+Screen Scraping         :
 
 Transaction Managers:
         - WebSphere
         - CICS
         - IMS (_Legacy_)
+
+
+the logon procedure of the user connects hem with all hes files
+
+
+                        prefixes:
+ICH             : Racf
+DSN             : Db2
+$HASP           : JES
+
+
+
+
+
+shtelat tavim kryim
+
+EYE CATCHER is a readable piece in your load module that you plant on purpose
+
+## ALL the reg info is IN THE PSW INFORMATION
+
+reg 1 some data on the loadmodule
+
+error codes
+rc are stored in reg 15
+rc = 0
+rc = 4
+rc = 8
+system abbend code (_abb normal end_)
+
+S0c7    : translation problems
+S0c4    : is worse
+
+IPCS    : is a loadmodule that helps with finding bugs in dumps
