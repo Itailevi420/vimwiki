@@ -2,6 +2,7 @@
 
                              📇 INDEX :
 
+                         check out colin paice blog
 
 IKJEFT01    : The load module of "TSO"
 
@@ -53,6 +54,18 @@ SDSf        : Job Output
 
 JES         : Job Management
 
+spool       : disk's that JES owns and uses.
+
+XMIT        : like ftp but legacy still in wide use
+```
+--> TSO XMIT
+
+```
+and the reciving side need to enter
+```
+recive ....etc.? some more parametors
+```
+
 SMP/E           : Software Maintenance "The system modification program"
                   keeps all package dependencies managed something like a
                   package manager on linux.
@@ -71,6 +84,8 @@ SMF             : "Systems Management Facility" Activity Reporting
                   good for diagnosing problems audeting transactions.
 
 USS             : Unix Services
+
+ICKDSF          :
 
 Screen Scraping         :
 
@@ -127,3 +142,27 @@ IPCS    : is a loadmodule that helps with finding bugs in dumps
 - --> uss lab
 - --> z/OS lab
 - RTFM = read the fucking manual
+
+in tapes we dont usulley put PDS, only sequential data sets.
+LUN     : is a modern ssd in the mainframe that store datasets that emulates
+          DASD, tapes, etc.
+
+
+console numbers
+```
+                         check out colin paice blog
+<product><xxxx><c>
+$HASP1234E
+
+I = Information
+E = Error
+S = Server Error
+
+this command stops JES and you end up with a console
+$PJES2
+
+to see the init and class setup
+$D I
+```
+
+errors          : d37 = space error usually use compress
