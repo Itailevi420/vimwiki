@@ -4,6 +4,7 @@
 
                          check out colin paice blog
 
+SYSZEN      :
 IKJEFT01    : The load module of "TSO"
 
 IPL         : IPL (initial program load) is a mainframe term for the loading of
@@ -12,11 +13,7 @@ IPL         : IPL (initial program load) is a mainframe term for the loading of
               megabytes of code that is customized by each installation,
               requiring some time to load the code into the memory.
 
-SAS/IML     : SAS/IML is an interactive matrix language that is both powerful
-              and flexible. The fundamental data object on which all commands
-              operate is a row by column matrix. Therefore, single elementwise
-              operators such as + and / can operate on many data values to
-              produce many results
+IML         : IML (_Initial Machine Load_)
 
 RACF        :
 
@@ -65,6 +62,12 @@ and the reciving side need to enter
 ```
 recive ....etc.? some more parametors
 ```
+                ## mainframe emulators 💻
+                - Hercules (_open source_)
+                - z/pdt (_IBM emulator_)
+                -
+
+PR/SM           : Logical to physical mapping
 
 SMP/E           : Software Maintenance "The system modification program"
                   keeps all package dependencies managed something like a
@@ -74,10 +77,53 @@ DF SMS          : "Data Facility Storage Management Service" Automated Disk Mgt
                   Basically manages Storage what data goes where and deals with
                   backups migrations copy's and all I/O management.
 
-WLM/IRD         : Workload Managers
+HMC             : connected to the SE (_support element_)
 
-SNA             : LEGACY networking
-TCP/IP          : Networking
+WLM             : Workload Managers
+                  1. Builds nodes ----->
+                  2. Assigns work to nodes ----->
+                  3. Measures system <-----
+                  4. Unpark/Parks low CP's ----->
+
+Hyper Dispatch  : (_see also HyperSockets_) Helps WLM with response times
+                  especially in large systems with lots of cors.
+                  So when we virtualize a system like defining an LPAR
+                  and there is work to be done the system looks in a pool of
+                  available processors in line of that specific line of work
+                  (_zIIp, IFL, SAP etc._)
+                  it fined a processor that can handle it and making sure that
+                  the same process would go to the same processor so it can
+                  use relevant data that is stored in the cache form the
+                  previous operation for maximum efficiency.
+
+
+zDAC            : z Discovery And auto Configuration can help with configuring
+                  the HCD (_Hardware and configuration Definition_) helps
+                  simplify I/O and some hardware (_mainly FICON_) configuration
+
+VFM             : Virtual Flash Memory
+                  helps intensive I/O programs like Db2 and such to minimize and
+                  impact by storing the more frequently accessed data thus
+                  improving performance
+
+zAWARE          : z Advanced Workload Analysis Reporter. has its own LPAR
+(_see pic $HOME/Pictures/Ibm-system-map.png ._)
+                  it watches every thing going on and compare what it see's to
+                  previous data
+
+Millicode        : A micro architecture a layer that is making it possible to
+                  add new functionality and still retaining the full
+                  backward compatibility
+
+IRD             : intelligent Resource Director (_IRD_)
+                  can manage LPAR clusters and LPAR cpu management
+                  - Dynamic Channel Path Management (_DCPM_)
+                    FICON channel bandwidth which is primarily used for
+                    connections to storage devices
+
+                  - Channel Subsystem Priority Queuing
+                    Allows I/O requests in the Channel Subsystem (_CSS_) to
+                    have priorities assigned to them
 
 SMF             : "Systems Management Facility" Activity Reporting
                   almost like a database for tracking events.
@@ -87,9 +133,46 @@ USS             : Unix Services
 
 ICKDSF          :
 
-Screen Scraping         :
+Screen Scraping :
 
-Transaction Managers:
+## NETWORKING
+Hyper sockets   : virtual connections that allow you to connect to a z/VM z/OS
+                  or Linux systems after you define a virtual connection
+                  (_a Hyper socket_ 😉)
+                  so you can mix and match to the os it looks just like a
+                  networking device for instance :👇
+                  ```
+                  lets say you define a group of HyperSockets as fallows:
+                  HyperSockets "A"
+                        has 2 connections
+                        - z/OS(1)
+                        - z/OS(2)
+                  HyperSockets "B"
+                        has 3 connections 1 of them is the same machine as "A"
+                        HyperSockets
+                        - Linux(1)
+                        - Linux(2)
+                        - z/OS(2)
+                  HyperSockets "C"
+                        has 6 connections 1 to a z/VM, 3 to the internal os's
+                        that is running in the z/VM and another 2 connections
+                        - Linux(3)
+                        - z/OS(3)
+                        - z/VM
+                        - Linux#1 (that is in this particular z/VM)
+                        - Linux#2(that is in this particular z/VM)
+                        - z/OS#1(that is in this particular z/VM)
+                  ```
+                  _All these systems can now communicate like if their were_
+                  _plugged to a super high speed network switch accept it's all_
+                  _virtual_
+
+SNA             : LEGACY networking
+
+TCP/IP          : Networking
+
+
+### Transaction Managers:
         - WebSphere
         - CICS
         - IMS (_Legacy_)
@@ -166,3 +249,24 @@ $D I
 ```
 
 errors          : d37 = space error usually use compress
+
+
+ISRDDN          : is an ispf utiliti that show you all the DD cards that is
+                  allocated to your USER
+
+## TSO COMMANDS
+- lpa     :link list they are always in cache (real memory)
+ ac
+- link list (lla) laibrary look asaid
+- tso del 'dsn'
+-
+-
+
+
+to create a new member in a empty LAIBRARY
+in ispf
+
+
+ETL     : the notion of moving data from a mainframe to pc and vise versa
+          for development
+          _Extract Transfer Load_
