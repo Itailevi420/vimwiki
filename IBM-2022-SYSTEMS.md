@@ -16,7 +16,8 @@ IPL         : IPL (initial program load) is a mainframe term for the loading of
 IML         : IML (_Initial Machine Load_)
 
 RACF        :
-
+segregation = to do something on behalf a different user
+serogation
 SYS1.
 
 3270 data stream
@@ -43,13 +44,17 @@ CHPIDS      : Channel Path Identifiers
 
 PCHID       : Physical Channel ID
 
+LPA/LinkList : syslib wher the system looks for loadmodules
+
 
 
 RMF         : "Resource Management Facility" Performance Monitoring.
 
 SDSf        : Job Output
 
-JES         : Job Management
+JES         : (_Job Entry Subsystem_)Job Management
+              accept and queue jobs submittedfor execution.
+
 
 spool       : disk's that JES owns and uses.
 
@@ -77,7 +82,26 @@ DF SMS          : "Data Facility Storage Management Service" Automated Disk Mgt
                   Basically manages Storage what data goes where and deals with
                   backups migrations copy's and all I/O management.
 
-HMC             : connected to the SE (_support element_)
+SE              : The support element. every thing that you can do with the
+                  HMC you can do with the SE.
+                  usually there is 2 in a mainframe.
+                  the SE contains :
+                  1. LIC (_Licensed Internal Code_) used to control and monitor
+                     the CPC
+                  2. Loging and problem determination
+                  3. hardware system definitions
+                  4. IOCDS that is used at POR time. (tells the mainframe how
+                     to configure all the I/O and the LPAR's)
+                  5. BOC (_battery operated clock_) to manage and sync time
+                     between all the component's
+                  6. Ethernet adapters.
+
+HMC             : (_Hardware Management Console_)
+                  usually used to start,stop,.. and manage LPAR's
+                  1. Can connect to the SE remotely.
+                  2. Add multiple mainframes to a single HMC (max 100)
+                  3. Add a single mainframe to multiple HMC's (max 32)
+                  4. connect to the HMC remotely
 
 WLM             : Workload Managers
                   1. Builds nodes ----->
@@ -107,13 +131,55 @@ VFM             : Virtual Flash Memory
                   improving performance
 
 zAWARE          : z Advanced Workload Analysis Reporter. has its own LPAR
-(_see pic $HOME/Pictures/Ibm-system-map.png ._)
+                  (_see pic $HOME/Pictures/Ibm-system-map.png ._)
                   it watches every thing going on and compare what it see's to
                   previous data
 
-Millicode        : A micro architecture a layer that is making it possible to
+Millicode       : A micro architecture a layer that is making it possible to
                   add new functionality and still retaining the full
                   backward compatibility
+
+Sysplex         : a way of making multiple systems work as a team. up to 32
+                  there is a couple of sysplex's:
+                  **monoPlex** : has only one LPAR.
+                  **baseSysplex** : All the LPAR's are connected to each other
+                     and know of one another.
+                  **parallelSysplex** : All the LPAR's are connected to the
+                     **Coupling Facility** (_A special LPAR_) typically you would
+                     have a backup of this LPAR on another machine/mainframe.
+                     the **Coupling Facility** takes care of all the complexity
+                     and overhead of the systems working together.
+### sysplex component's
+                  - **STP** : (_Server Time Protocol_) synchronies time between the
+                    systems.
+                  - **GRS** : (_Global Resource Serialization_) this allow to
+                    multiple systems to access the same resource concurrently
+                    serializing when necessary to allow exclusive access.
+                  -
+WTO     write to operator
+
+ENQ      : checks if the resource is available and if it is it locks it for
+           updating, editing etc.
+
+DEQ
+                  - **XCF** : (_cross Coupling Facility_) this manages communications
+                    between applications in a sysplex allows you to issue a
+                    command on behalf of another application in the system.
+                    This what makes the sysplex communicate as a whole.
+                  - **CouplingLinks** : this connect LPAR to processors, **without**
+                    these accessing memory on deferent physical systems would
+                    have to run through one of those LPAR's.
+                    and these allow direct memory access connections between
+                    the **sysplex memory and the memory of an attached system.**
+                  - **CDS** : (_Coupled Data Set_) contains information related
+                    to the parallel sysplex systems.
+                    e.g 👇
+                    say you are part of a team that needs to do some work on
+                    one database, codebase,,,
+                    so to make things easy you need to keep a list/ledger
+                    so you wont runover someone else's work and vise versa.
+
+
 
 IRD             : intelligent Resource Director (_IRD_)
                   can manage LPAR clusters and LPAR cpu management
@@ -259,6 +325,8 @@ ISRDDN          : is an ispf utiliti that show you all the DD cards that is
  ac
 - link list (lla) laibrary look asaid
 - tso del 'dsn'
+- tso ALLOC DA(ALLOC.FILE2) DSORG(PS) SPACE(2,0) TRACKS LRECL(80) BLKSIZE(800)
+ RECFM(F,B) NEW
 -
 -
 
@@ -270,3 +338,19 @@ in ispf
 ETL     : the notion of moving data from a mainframe to pc and vise versa
           for development
           _Extract Transfer Load_
+
+
+jcl
+
+
+
+
+```jcl
+//cond=(0,NE)
+//* need to read left to right if false it does the step. if true it
+//* skips the steps. and can do with more conditions
+//cond=((o,NE),(...),(...))
+//* it like an 'or' '||' statement
+
+TYPERUN=SCAN/HOLD
+```
