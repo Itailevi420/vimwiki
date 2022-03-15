@@ -18,7 +18,7 @@ IML         : IML (_Initial Machine Load_)
 RACF        :
 segregation = to do something on behalf a different user
 serogation
-SYS1.
+SYS1.LINKLIST = usually the utiliti dataset in the system.
 
 3270 data stream
 
@@ -51,6 +51,10 @@ LPA/LinkList : syslib wher the system looks for loadmodules
 RMF         : "Resource Management Facility" Performance Monitoring.
 
 SDSf        : Job Output
+```
+SDSf HELD Output:
+COMMAD --> TSO SDSF H
+```
 
 JES         : (_Job Entry Subsystem_)Job Management
               accept and queue jobs submittedfor execution.
@@ -81,6 +85,8 @@ SMP/E           : Software Maintenance "The system modification program"
 DF SMS          : "Data Facility Storage Management Service" Automated Disk Mgt
                   Basically manages Storage what data goes where and deals with
                   backups migrations copy's and all I/O management.
+                  IDGXX is an sms prefix
+
 
 SE              : The support element. every thing that you can do with the
                   HMC you can do with the SE.
@@ -161,7 +167,10 @@ WTO     write to operator
 ENQ      : checks if the resource is available and if it is it locks it for
            updating, editing etc.
 
-DEQ
+DEQ      : the oposite of ENQ it releases the lock to of them is used by GRS.
+
+
+
                   - **XCF** : (_cross Coupling Facility_) this manages communications
                     between applications in a sysplex allows you to issue a
                     command on behalf of another application in the system.
@@ -196,8 +205,18 @@ SMF             : "Systems Management Facility" Activity Reporting
                   good for diagnosing problems audeting transactions.
 
 USS             : Unix Services
+### I/O, Disk & tape config
+ICKDSF          : config data sets that defines Labels for disks,tapes,etc.
+                  e.g:
+                  `VOL=SER=12345`
+DSCB            : Data set Control Block
+                  in the old days some times to unlock a tape you would ZAP
+                  the tape with a ZAP utiliti to go over the bits and to flip
+                  the necessary one to unlock the tape.
+VTOC            : hase 6 DSCB's usually the fifth DSCB has volume space info.
 
-ICKDSF          :
+FUZI
+MEM?
 
 Screen Scraping :
 
@@ -251,6 +270,7 @@ the logon procedure of the user connects hem with all hes files
 ICH             : Racf
 DSN             : Db2
 $HASP           : JES
+IEDG ?          : SMS
 
 
 
@@ -340,17 +360,8 @@ ETL     : the notion of moving data from a mainframe to pc and vise versa
           _Extract Transfer Load_
 
 
-jcl
+      ## [JCL](JCL)
+
+      ## [REXX](REXX)
 
 
-
-
-```jcl
-//cond=(0,NE)
-//* need to read left to right if false it does the step. if true it
-//* skips the steps. and can do with more conditions
-//cond=((o,NE),(...),(...))
-//* it like an 'or' '||' statement
-
-TYPERUN=SCAN/HOLD
-```
