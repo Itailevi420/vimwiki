@@ -19,9 +19,17 @@ todo fix tab compilation native neovim
 
 tso commands in rexx
 
-host [environments](environments)
-EXECIO = helps you to read and write to data-sets a
+# environments :
+- set commands to the unix environments
+```
+address SYSCALLS "ls -la"
+```
+tso omvn
 
+# dsnrexx
+# ispexec
+EXECIO = helps you to read and write to data-sets a
+ISREDIT = an address space to make ispf editor macro. it works under TSO/IS:
 
 SYSDSN = check file status
 systsprt

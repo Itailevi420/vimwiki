@@ -6,6 +6,14 @@
 
 SYSZEN      :
 IKJEFT01    : The load module of "TSO"
+DFHSIP   = CICS loadmodule.
+```
+TSO COMMANDS:
+to allocate a logical file <foo> to jes internal reader thus submitting a job.
+ALLOC FI(FOO) SYSOUT WRITER(INTRDR)
+```
+VTAM        : the networking manager of z/OS has 8 char addresses to each
+              connection like in the tcp/ip world but with ip addresses.
 
 IPL         : IPL (initial program load) is a mainframe term for the loading of
               the operating system into the computer's main memory .
@@ -22,6 +30,7 @@ SYS1.LINKLIST = usually the utiliti dataset in the system.
 
 3270 data stream
 
+TCB         : task control block. the OS task (running application) queue.
                       ## MAINFRAME OPERATING SYSTEMS:💻
             - z/OS
             - z/TPF
@@ -44,7 +53,10 @@ CHPIDS      : Channel Path Identifiers
 
 PCHID       : Physical Channel ID
 
+address space blocks:
 LPA/LinkList : syslib wher the system looks for loadmodules
+               a bunch of modules that helps the system with I/O.
+LLA
 
 
 
@@ -161,8 +173,11 @@ Sysplex         : a way of making multiple systems work as a team. up to 32
                   - **GRS** : (_Global Resource Serialization_) this allow to
                     multiple systems to access the same resource concurrently
                     serializing when necessary to allow exclusive access.
-                  -
-WTO     write to operator
+
+## Data areas:
+ASCB     : Address Space Co
+PSA      : Prefix in offset 0
+WTO/R     write to operator and Replay
 
 ENQ      : checks if the resource is available and if it is it locks it for
            updating, editing etc.
@@ -214,6 +229,7 @@ DSCB            : Data set Control Block
                   the tape with a ZAP utiliti to go over the bits and to flip
                   the necessary one to unlock the tape.
 VTOC            : hase 6 DSCB's usually the fifth DSCB has volume space info.
+VVDS            : like vtoc for vsam files
 
 FUZI
 MEM?
@@ -292,8 +308,12 @@ rc = 4
 rc = 8
 system abbend code (_abb normal end_)
 
-S0c7    : translation problems
-S0c4    : is worse
+ABBEND codes
+S0C806-04      : module not found
+S0c7           : translation problems and DCB problems
+S222           : user problems and sessions?
+S0c4           : is worse
+S013-14        : usulley DCB problems
 
 BC      : branch conditional
 
@@ -349,7 +369,15 @@ ISRDDN          : is an ispf utiliti that show you all the DD cards that is
  RECFM(F,B) NEW
 -
 -
-
+## VSAM FILES:
+  AM = Access Method  - Class  (data,functionality)
+BPAM , QSAM , BSAM     - PS
+VSAM:           CI (records) , CA  it allows to work on part of a file on a
+                record level so the file is not locked for writing and reading.
+    - ESDS    Entery Sequential
+    - KSDS    Key Sequentail
+    - RRDS    Relative   --  Direct
+    - LDS     Linear     4k, 4k 4k 4k 4k 4k         ( Div)
 
 to create a new member in a empty LAIBRARY
 in ispf
@@ -364,4 +392,5 @@ ETL     : the notion of moving data from a mainframe to pc and vise versa
 
       ## [REXX](REXX)
 
+      ## [CICS](CICS)
 

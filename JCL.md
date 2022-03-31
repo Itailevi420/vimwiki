@@ -69,7 +69,8 @@ FFILE
  ```
   AM = Access Method  - Class  (data,functionality)
 BPAM , QSAM , BSAM     - PS
-VSAM:           CI (records) , CA
+VSAM:           CI (records) , CA  it allows to work on part of a file on a
+                record level so the file is not locked for writing and reading.
     - ESDS    Entery Sequential
     - KSDS    Key Sequentail
     - RRDS    Relative   --  Direct
@@ -88,3 +89,11 @@ aspects of the system behaver
 
 CSECT       : the smallest operational part of a loadmodule
 ADRDRSU     :
+
+
+to submit a jcl from another jcl use `SYSOUT=(*,INTRDR)`
+
+INTRDR  Inital reader that read jobs in the system
+
+
+INCLUDE     : like a procedure but only with dd cards.
