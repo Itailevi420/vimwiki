@@ -79,7 +79,8 @@ c as(tran_name) to(group)
                PLTPI start on cics statup, has two phases the first is bifore
                the "control is being given" message, the second is after.
 
-               ## CICS SECURITY
+ ## CICS SECURITY
+               
 SAF          : (_System Authorization Facility_)
 
 call & link
