@@ -22,13 +22,13 @@ unit of work = like where to return in the unit of work time line of the
                 her is Extra partition and Intra partition.
                 the Extra writes or reads to a dd card.
                 and Intra writes or reads from the cics memory
-                
-            - Indirect redirect to extra
+- Indirect redirect to extra
             
-               Axilury/Main :
+  Axilury/Main :
                Axi means that the tsqueue (_temporary storage queue_)
                is writen to a dataset. (like EXTRA)
                Main means that it is writing to the cics memory. (like INTRA)
+               
 -  Ati  atomatic transaction initiation t
 - CEOT    = To look a you as a user.
 (_in hebrew "look at me."_)
