@@ -22,7 +22,9 @@ unit of work = like where to return in the unit of work time line of the
                 her is Extra partition and Intra partition.
                 the Extra writes or reads to a dd card.
                 and Intra writes or reads from the cics memory
-              - Indirect redirect to extra
+                
+            - Indirect redirect to extra
+            
                Axilury/Main :
                Axi means that the tsqueue (_temporary storage queue_)
                is writen to a dataset. (like EXTRA)
@@ -94,6 +96,7 @@ NEWCOPY   : when updating a programe to load the new cicsMoudle to memory
 PHASEIN   :
 
 DSA       : (_Dinamic storage erea_)CICS Address space
+
       - DSA  -------- Below the 16MB LINE
       - EDSA  -------- Above the 16MB LINE
       - GDSA  --------  Above the 2GB LINE
