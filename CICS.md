@@ -111,13 +111,15 @@ COMMAREA  : 32KB of data that you cat pass between cics
 channels & containers this is the new way.
 
   ## Inter Communication System
-  - MRO     : (_Multi Reign Operation_) Allows cics instance's to communicate
-              with out the use of **TCP/IP or ACF/VTAM**
+- MRO     : (_Multi Reign Operation_) Allows cics instance's to communicate
+            with out the use of **TCP/IP or ACF/VTAM**
 
 
-  - ISC     : (_Inter System Communication_) to communicate cics to non-cics
-              apps and for cics in a different sysPlex.
-              usually over **TCP/IP or ACF/VTAM**
+- ISC     : (_Inter System Communication_) to communicate cics to non-cics
+            apps and for cics in a different sysPlex.
+            usually over **TCP/IP or ACF/VTAM (sna)**
 
+- TOR/NOR : is the terminal owning area or the network owning area
+            and is in charge of the communications
 
 IPIC      : tcp/ip

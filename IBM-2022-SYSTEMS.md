@@ -6,7 +6,7 @@
 
 SYSZEN      :
 IKJEFT01    : The load module of "TSO"
-DFHSIP   = CICS loadmodule.
+DFHSIP      : CICS loadmodule.
 ```
 TSO COMMANDS:
 to allocate a logical file <foo> to jes internal reader thus submitting a job.
@@ -23,10 +23,12 @@ IPL         : IPL (initial program load) is a mainframe term for the loading of
 
 IML         : IML (_Initial Machine Load_)
 
-RACF        :
+RACF        : z/OS security server
+
 segregation = to do something on behalf a different user
-serogation
-SYS1.LINKLIST = usually the utiliti dataset in the system.
+
+
+SYS1.LINKLIST = usually the utility dataset in the system.
 
 3270 data stream
 
@@ -39,21 +41,28 @@ TCB         : task control block. the OS task (running application) queue.
             - Linux on IBM Z
             - KVM on z (_open source_**Type one hypervisor**_)
 
-LPAR        : Logical Partition
+LPAR        : Logical Partition under PR/SM (_prisma_)
 
 CP          : Central Processor
 
-SAP         : System Assist Processor
+SAP         : System Assist Processor (dedicated to I/O)
 
 IFL         : Integrated Facility for Linux
 
 zIIP        : IBM z Systems Integrated Information Processor for Linux
 
-CHPIDS      : Channel Path Identifiers
+CHPIDS      : Channel Path Identifiers. channels that go out CSS to I/O devices
 
-PCHID       : Physical Channel ID
+PCHID       : Physical Channel ID. channels that go in the CSS form system
 
-address space blocks:
+### ther is 5 different types of address spaces
+1. system address space
+2. subsystem address space
+3. started task program's
+4.
+5.
+
+### address space blocks:
 LPA/LinkList : syslib wher the system looks for loadmodules
                a bunch of modules that helps the system with I/O.
 LLA
@@ -69,7 +78,7 @@ COMMAD --> TSO SDSF H
 ```
 
 JES         : (_Job Entry Subsystem_)Job Management
-              accept and queue jobs submittedfor execution.
+              accept and queue jobs submitted for execution.
 
 
 spool       : disk's that JES owns and uses.
@@ -79,14 +88,14 @@ XMIT        : like ftp but legacy still in wide use
 --> TSO XMIT
 
 ```
-and the reciving side need to enter
+and the receiving side need to enter
 ```
 recive ....etc.? some more parametors
 ```
-                ## mainframe emulators 💻
-                - Hercules (_open source_)
-                - z/pdt (_IBM emulator_)
-                -
+## mainframe emulators 💻
+- Hercules (_open source_)
+- z/pdt (_IBM emulator_)
+-
 
 PR/SM           : Logical to physical mapping
 
@@ -97,7 +106,7 @@ SMP/E           : Software Maintenance "The system modification program"
 DF SMS          : "Data Facility Storage Management Service" Automated Disk Mgt
                   Basically manages Storage what data goes where and deals with
                   backups migrations copy's and all I/O management.
-                  IDGXX is an sms prefix
+                  `IDGXX` is an sms prefix
 
 
 SE              : The support element. every thing that you can do with the
@@ -116,6 +125,7 @@ SE              : The support element. every thing that you can do with the
 
 HMC             : (_Hardware Management Console_)
                   usually used to start,stop,.. and manage LPAR's
+                  it connects to the SE Support Element
                   1. Can connect to the SE remotely.
                   2. Add multiple mainframes to a single HMC (max 100)
                   3. Add a single mainframe to multiple HMC's (max 32)
@@ -130,7 +140,7 @@ WLM             : Workload Managers
 Hyper Dispatch  : (_see also HyperSockets_) Helps WLM with response times
                   especially in large systems with lots of cors.
                   So when we virtualize a system like defining an LPAR
-                  and there is work to be done the system looks in a pool of
+                  and there is work to be done, the system looks in a pool of
                   available processors in line of that specific line of work
                   (_zIIp, IFL, SAP etc._)
                   it fined a processor that can handle it and making sure that
@@ -159,10 +169,14 @@ Millicode       : A micro architecture a layer that is making it possible to
 
 Sysplex         : a way of making multiple systems work as a team. up to 32
                   there is a couple of sysplex's:
+
                   **monoPlex** : has only one LPAR.
+
                   **baseSysplex** : All the LPAR's are connected to each other
                      and know of one another.
+
                   **parallelSysplex** : All the LPAR's are connected to the
+
                      **Coupling Facility** (_A special LPAR_) typically you would
                      have a backup of this LPAR on another machine/mainframe.
                      the **Coupling Facility** takes care of all the complexity
@@ -175,9 +189,11 @@ Sysplex         : a way of making multiple systems work as a team. up to 32
                     serializing when necessary to allow exclusive access.
 
 ## Data areas:
+```
 ASCB     : Address Space Co
 PSA      : Prefix in offset 0
-WTO/R     write to operator and Replay
+WTO/R    : write to the console
+```
 
 ENQ      : checks if the resource is available and if it is it locks it for
            updating, editing etc.
@@ -203,6 +219,8 @@ DEQ      : the oposite of ENQ it releases the lock to of them is used by GRS.
                     so to make things easy you need to keep a list/ledger
                     so you wont runover someone else's work and vise versa.
 
+CEC             : a physical cage or drawer that holds the processors in the
+                  system
 
 
 IRD             : intelligent Resource Director (_IRD_)
@@ -211,10 +229,11 @@ IRD             : intelligent Resource Director (_IRD_)
                     FICON channel bandwidth which is primarily used for
                     connections to storage devices
 
-                  - Channel Subsystem Priority Queuing
+CSS               - Channel Subsystem Priority Queuing
                     Allows I/O requests in the Channel Subsystem (_CSS_) to
                     have priorities assigned to them
-
+CHPID           :
+PCHID
 SMF             : "Systems Management Facility" Activity Reporting
                   almost like a database for tracking events.
                   good for diagnosing problems audeting transactions.
@@ -394,3 +413,23 @@ ETL     : the notion of moving data from a mainframe to pc and vise versa
 
       ## [CICS](CICS)
 
+## OPERATOR COMMANDS
+```
+- DISPLAY ASM (page DS utilization)
+- DISPLAY r,a (replay all)
+/d r,r,cn=(all)   ---> for outstanding reply's
+to reply use
+R WTOnumber,response ---> e.g: R 01,response
+                               R 1,response
+                               R 1,response
+
+/d a     ---> display jobs
+/d a,a     ---> display jobs long list
+/d a,l     ---> display jobs short list. jobs under jes
+```
+multy linu WTO   - when a command write's to the console usually each line ends
+with 210 address space.
+sys1.uans? to set in racf some config
+
+Dinamic Address translation   =  the component that translats virtual storage
+                                 to real storage

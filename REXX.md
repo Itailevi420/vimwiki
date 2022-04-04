@@ -1,4 +1,12 @@
 to run a rexx program online `TSO EXEC 'NAME.OF.DS(MEMBER)'`
+
+
+rexx open source projects
+
+- mvsshow
+- iplinfo
+
+
 ## data stack in rexx
 
 push = (LIFA) last in first out
