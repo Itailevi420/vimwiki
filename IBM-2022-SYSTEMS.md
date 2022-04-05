@@ -52,8 +52,10 @@ IFL         : Integrated Facility for Linux
 zIIP        : IBM z Systems Integrated Information Processor for Linux
 
 CHPIDS      : Channel Path Identifiers. channels that go out CSS to I/O devices
+HCD         : defines what CHPIDS are managed by the system **not all** CHPIDS
+              can be managed
 
-PCHID       : Physical Channel ID. channels that go in the CSS form system
+PHCHID      : Physical Channel ID. channels that go in the CSS form system
 
 ### ther is 5 different types of address spaces
 1. system address space
@@ -79,6 +81,26 @@ COMMAD --> TSO SDSF H
 
 JES         : (_Job Entry Subsystem_)Job Management
               accept and queue jobs submitted for execution.
+`s jes2,parm='warm,noreq'` ---> start jes2 with operator command `noreq` means
+that jes will start and wont ask stuff from the operator
+
+```
+jes2 operator commands
+to continue with default parms
+$S
+$D I [(1-2)] --> display status of initiators
+$D Initinfo  --> display initialization info
+$D J'jobname' --> display job info
+$T I(4),class=m --> to change initiator class (t stand for SET)
+$P --> stop jes from taking new jobs, but the jobs that are started will still
+       finish
+d omvs,a=all   -->  to show all unix process
+F BPXOINIT,TERM=pid   -->  to terminate a unix process (F means modify)
+F BPXOINIT,SHUTDOWN=FORKINIT  --> forkinit means that the unix system
+                                  will stop taking process's  F means modify
+
+v xcf,
+```
 
 
 spool       : disk's that JES owns and uses.
@@ -94,7 +116,7 @@ recive ....etc.? some more parametors
 ```
 ## mainframe emulators 💻
 - Hercules (_open source_)
-- z/pdt (_IBM emulator_)
+- z/pdt (_IBM emulator_) (_1090 PREFIX_)
 -
 
 PR/SM           : Logical to physical mapping
@@ -117,7 +139,8 @@ SE              : The support element. every thing that you can do with the
                      the CPC
                   2. Loging and problem determination
                   3. hardware system definitions
-                  4. IOCDS that is used at POR time. (tells the mainframe how
+                  4. IOCDS (_params dataset_)
+                     that is used at POR time. (tells the mainframe how
                      to configure all the I/O and the LPAR's)
                   5. BOC (_battery operated clock_) to manage and sync time
                      between all the component's
@@ -147,6 +170,7 @@ Hyper Dispatch  : (_see also HyperSockets_) Helps WLM with response times
                   the same process would go to the same processor so it can
                   use relevant data that is stored in the cache form the
                   previous operation for maximum efficiency.
+
 
 
 zDAC            : z Discovery And auto Configuration can help with configuring
@@ -415,19 +439,48 @@ ETL     : the notion of moving data from a mainframe to pc and vise versa
 
 ## OPERATOR COMMANDS
 ```
-- DISPLAY ASM (page DS utilization)
-- DISPLAY r,a (replay all)
+/DISPLAY ASM (page DS utilization)
+/DISPLAY r,a (reply,all)
 /d r,r,cn=(all)   ---> for outstanding reply's
 to reply use
-R WTOnumber,response ---> e.g: R 01,response
+/R WTOnumber,response ---> e.g: R 01,response
+
                                R 1,response
                                R 1,response
 
 /d a     ---> display jobs
-/d a,a     ---> display jobs long list
+/d a,a     ---> display all jobs long list (_IEE115I_)
 /d a,l     ---> display jobs short list. jobs under jes
+/d u  ---> display UCB's (unit control block)
+/d u,,,unitAddressNum   to display ---> /d u,,,1001,1
+/d u,iplvol  ---> display the IPL disk
+/d iplinfo   ---> like what parmlib it uses etc.
+/d u,vol=rsm009
+/d m  ---> (matrix=...) display UCB's (unit control block) UCW's CSS.
+/d m=dev(unitAddressNum)   ---> display status and number of online paths for all devices
+/d m=chp()    ---> channel path info
+/d m=cpu      ---> info abuot cors(smt  multi threaded operation)
+/d m=config(member-suffix) --->
+/d m=core
+
+jes2 operator commands
+to continue with default parms
+$S
+$D I [(1-2)] --> display status of initiators
+$D Initinfo  --> display initialization info
+$D J'jobname' --> display job info
+$T I(4),class=m --> to change initiator class (t stand for SET)
+$P --> stop jes from taking new jobs, but the jobs that are started will still
+       finish
+d omvs,a=all   -->  to show all unix process
+F BPXOINIT,TERM=pid   -->  to terminate a unix process (F means modify)
+F BPXOINIT,SHUTDOWN=FORKINIT  --> forkinit means that the unix system
+                                  will stop taking process's  F means modify
+
+v xcf,
 ```
-multy linu WTO   - when a command write's to the console usually each line ends
+
+multi line WTO   - when a command write's to the console usually each line ends
 with 210 address space.
 sys1.uans? to set in racf some config
 
