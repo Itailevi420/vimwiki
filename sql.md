@@ -11,6 +11,7 @@ CREATE ALIAS <?HOLDER>
 ## Determining Tablespace Type
 ``` sql
 CREATE TABLESPACE  ________
+DROP   TABLE
 ```
 
 

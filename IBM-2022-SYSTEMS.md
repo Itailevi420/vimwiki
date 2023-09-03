@@ -4,13 +4,24 @@
 
                          check out colin paice blog
 
+IOCDS       : the disk parametor file. in Hercules its the tk4-.cnf
+ADRDSSU     : Important application that helps to manage datasets
 SYSZEN      :
 IKJEFT01    : The load module of "TSO"
 DFHSIP      : CICS loadmodule.
+HASJES20    : Jes2 loadmodule.
+ISTES01     : VTAM loadmodule.
+SYSRES      : the IPL disk to start MVS. in Hercules its calld MVSRES in IOCDS
+HSA         : The name of the REAL MEMORY buffer that is used for the disks
+              and other devices that is configured in IOCDS.
+
 ```
 TSO COMMANDS:
+
 to allocate a logical file <foo> to jes internal reader thus submitting a job.
 ALLOC FI(FOO) SYSOUT WRITER(INTRDR)
+
+TSO HOMETEST  ---> shows the ip address of the LPAR your in
 ```
 VTAM        : the networking manager of z/OS has 8 char addresses to each
               connection like in the tcp/ip world but with ip addresses.
@@ -20,6 +31,16 @@ IPL         : IPL (initial program load) is a mainframe term for the loading of
               A mainframe operating system (such as OS/390) contains many
               megabytes of code that is customized by each installation,
               requiring some time to load the code into the memory.
+              taks params from the SYSRES, in Hercules called MVSRES
+IODF        : Software I/O config like the IOCDS but for the OS so he know's
+              what devices are configured
+
+              ```
+   IPL-Parameter -----> 07B000M1    ⤵
+    LOADPARM
+              IODF unit    |  LOADxx  | IMSI | Alt' nucliues |
+                1-4        |  5-6     |  7   |     8         |
+              ```
 
 IML         : IML (_Initial Machine Load_)
 
@@ -39,7 +60,7 @@ TCB         : task control block. the OS task (running application) queue.
             - z/VM (_Type one hypervisor_)
             - z/VSE (_for smaller companies can run with less personal_)
             - Linux on IBM Z
-            - KVM on z (_open source_**Type one hypervisor**_)
+            - KVM on z (_open source_ **Type one hypervisor**)
 
 LPAR        : Logical Partition under PR/SM (_prisma_)
 
@@ -49,23 +70,29 @@ SAP         : System Assist Processor (dedicated to I/O)
 
 IFL         : Integrated Facility for Linux
 
+ICF         : Integrated Coupling Facility
+
 zIIP        : IBM z Systems Integrated Information Processor for Linux
 
 CHPIDS      : Channel Path Identifiers. channels that go out CSS to I/O devices
-HCD         : defines what CHPIDS are managed by the system **not all** CHPIDS
+
+HCD         : difines the OS configuration and proccesor configuration as well.
+              defines what CHPIDS are managed by the system **not all** CHPIDS
               can be managed
 
 PHCHID      : Physical Channel ID. channels that go in the CSS form system
 
+## the first address space is called MASTER "SCHEDULER"
 ### ther is 5 different types of address spaces
 1. system address space
 2. subsystem address space
-3. started task program's
+3. started task program's  __every started task need's to be in
+   SYS1.PROCLIB(task_name).
 4.
 5.
 
 ### address space blocks:
-LPA/LinkList : syslib wher the system looks for loadmodules
+LPA/LinkList : syslib where the system looks for loadmodules
                a bunch of modules that helps the system with I/O.
 LLA
 
@@ -77,6 +104,7 @@ SDSf        : Job Output
 ```
 SDSf HELD Output:
 COMMAD --> TSO SDSF H
+PARM   --> shows the parametors Data sets
 ```
 
 JES         : (_Job Entry Subsystem_)Job Management
@@ -84,23 +112,6 @@ JES         : (_Job Entry Subsystem_)Job Management
 `s jes2,parm='warm,noreq'` ---> start jes2 with operator command `noreq` means
 that jes will start and wont ask stuff from the operator
 
-```
-jes2 operator commands
-to continue with default parms
-$S
-$D I [(1-2)] --> display status of initiators
-$D Initinfo  --> display initialization info
-$D J'jobname' --> display job info
-$T I(4),class=m --> to change initiator class (t stand for SET)
-$P --> stop jes from taking new jobs, but the jobs that are started will still
-       finish
-d omvs,a=all   -->  to show all unix process
-F BPXOINIT,TERM=pid   -->  to terminate a unix process (F means modify)
-F BPXOINIT,SHUTDOWN=FORKINIT  --> forkinit means that the unix system
-                                  will stop taking process's  F means modify
-
-v xcf,
-```
 
 
 spool       : disk's that JES owns and uses.
@@ -125,10 +136,11 @@ SMP/E           : Software Maintenance "The system modification program"
                   keeps all package dependencies managed something like a
                   package manager on linux.
 
-DF SMS          : "Data Facility Storage Management Service" Automated Disk Mgt
+DFSMS           : "Data Facility Storage Management Service" Automated Disk Mgt
                   Basically manages Storage what data goes where and deals with
                   backups migrations copy's and all I/O management.
                   `IDGXX` is an sms prefix
+DFSMShsm        : makes it easy to get the datasets that are archived .
 
 
 SE              : The support element. every thing that you can do with the
@@ -154,7 +166,7 @@ HMC             : (_Hardware Management Console_)
                   3. Add a single mainframe to multiple HMC's (max 32)
                   4. connect to the HMC remotely
 
-WLM             : Workload Managers
+WLM             : Workload Managers the IRD extends wlm to handle sysplex loads
                   1. Builds nodes ----->
                   2. Assigns work to nodes ----->
                   3. Measures system <-----
@@ -258,11 +270,13 @@ CSS               - Channel Subsystem Priority Queuing
                     have priorities assigned to them
 CHPID           :
 PCHID
+
 SMF             : "Systems Management Facility" Activity Reporting
                   almost like a database for tracking events.
                   good for diagnosing problems audeting transactions.
 
 USS             : Unix Services
+
 ### I/O, Disk & tape config
 ICKDSF          : config data sets that defines Labels for disks,tapes,etc.
                   e.g:
@@ -272,7 +286,12 @@ DSCB            : Data set Control Block
                   the tape with a ZAP utiliti to go over the bits and to flip
                   the necessary one to unlock the tape.
 VTOC            : hase 6 DSCB's usually the fifth DSCB has volume space info.
-VVDS            : like vtoc for vsam files
+VVDS            : vsam volume dataset    like vtoc for vsam files
+                  so if you have vsam datasets on dasd you need to have VVDS
+                  beside the vtoc so you can find the datasets
+
+                  vvr,nvr SYS1.VVDS.Vxxxx
+ICKDSF            TO initialize a new dasd makes the vtoc.
 
 FUZI
 MEM?
@@ -313,8 +332,24 @@ Hyper sockets   : virtual connections that allow you to connect to a z/VM z/OS
 
 SNA             : LEGACY networking
 
+APPC            : Application Peer to Peer connection (_USES SNA_)
+
 TCP/IP          : Networking
 
+
+ZOSMF       : a front end app written in Java for the mainfraim to do the job
+              of SMP/E. (package manager)
+
+OSA         : Network card in the mianfraim
+
+HZS         : Health checker prefix code
+
+HZSPROC     : Health checker default jobname
+
+
+//TM0TCP PGM=EZBTCPIP
+profile
+systcpd
 
 ### Transaction Managers:
         - WebSphere
@@ -335,12 +370,14 @@ IEDG ?          : SMS
 
 
 
-shtelat tavim kryim
 
 EYE CATCHER is a readable piece in your load module that you plant on purpose
 
 ## ALL the reg info is IN THE PSW INFORMATION
 the last place the app was. is stored in the PSW in the last 4 bytes
+
+DAT            : DAT is a component that translate between logical and physical
+                 memory.
 
 reg 1 some data on the loadmodule
 
@@ -351,12 +388,16 @@ rc = 4
 rc = 8
 system abbend code (_abb normal end_)
 
-ABBEND codes
+ABEND codes
 S0C806-04      : module not found
 S0c7           : translation problems and DCB problems
 S222           : user problems and sessions?
-S0c4           : is worse
-S013-14        : usulley DCB problems
+S0c4           :
+        Abend is a protection exception when a virtual address cannot be mapped
+                 with a physical address. When S0C4 Abend occurs. An Invalid
+                 address referenced due to subscript error. In a group Move the
+                 length of the receiving field was defined incorrectly.
+S013-14        : usually DCB problems
 
 BC      : branch conditional
 
@@ -380,25 +421,8 @@ LUN     : is a modern ssd in the mainframe that store datasets that emulates
           DASD, tapes, etc.
 
 
-console numbers
-```
-                         check out colin paice blog
-<product><xxxx><c>
-$HASP1234E
-
-I = Information
-E = Error
-S = Server Error
-
-this command stops JES and you end up with a console
-$PJES2
-
-to see the init and class setup
-$D I
-```
-
-errors          : d37 = space error usually use compress
-
+-
+-
 
 ISRDDN          : is an ispf utiliti that show you all the DD cards that is
                   allocated to your USER
@@ -410,79 +434,81 @@ ISRDDN          : is an ispf utiliti that show you all the DD cards that is
 - tso del 'dsn'
 - tso ALLOC DA(ALLOC.FILE2) DSORG(PS) SPACE(2,0) TRACKS LRECL(80) BLKSIZE(800)
  RECFM(F,B) NEW
--
--
-## VSAM FILES:
-  AM = Access Method  - Class  (data,functionality)
-BPAM , QSAM , BSAM     - PS
-VSAM:           CI (records) , CA  it allows to work on part of a file on a
-                record level so the file is not locked for writing and reading.
-    - ESDS    Entery Sequential
-    - KSDS    Key Sequentail
-    - RRDS    Relative   --  Direct
-    - LDS     Linear     4k, 4k 4k 4k 4k 4k         ( Div)
-
-to create a new member in a empty LAIBRARY
-in ispf
 
 
 ETL     : the notion of moving data from a mainframe to pc and vise versa
           for development
           _Extract Transfer Load_
 
+## file types
+### [DATASETS](DATASETS) : DFSMS
 
-      ## [JCL](JCL)
+## [JCL](JCL)
 
-      ## [REXX](REXX)
+## [REXX](REXX)
 
-      ## [CICS](CICS)
+## [CICS](CICS)
 
-## OPERATOR COMMANDS
-```
-/DISPLAY ASM (page DS utilization)
-/DISPLAY r,a (reply,all)
-/d r,r,cn=(all)   ---> for outstanding reply's
-to reply use
-/R WTOnumber,response ---> e.g: R 01,response
+## [OPERATOR COMMANDS](OPERATOR-COMMANDS)
 
-                               R 1,response
-                               R 1,response
+## [VTAM NETWORKING](VTAM-NETWORKING)
 
-/d a     ---> display jobs
-/d a,a     ---> display all jobs long list (_IEE115I_)
-/d a,l     ---> display jobs short list. jobs under jes
-/d u  ---> display UCB's (unit control block)
-/d u,,,unitAddressNum   to display ---> /d u,,,1001,1
-/d u,iplvol  ---> display the IPL disk
-/d iplinfo   ---> like what parmlib it uses etc.
-/d u,vol=rsm009
-/d m  ---> (matrix=...) display UCB's (unit control block) UCW's CSS.
-/d m=dev(unitAddressNum)   ---> display status and number of online paths for all devices
-/d m=chp()    ---> channel path info
-/d m=cpu      ---> info abuot cors(smt  multi threaded operation)
-/d m=config(member-suffix) --->
-/d m=core
+### SMP/E the z/OS package manager
+smp/e zones:
 
-jes2 operator commands
-to continue with default parms
-$S
-$D I [(1-2)] --> display status of initiators
-$D Initinfo  --> display initialization info
-$D J'jobname' --> display job info
-$T I(4),class=m --> to change initiator class (t stand for SET)
-$P --> stop jes from taking new jobs, but the jobs that are started will still
-       finish
-d omvs,a=all   -->  to show all unix process
-F BPXOINIT,TERM=pid   -->  to terminate a unix process (F means modify)
-F BPXOINIT,SHUTDOWN=FORKINIT  --> forkinit means that the unix system
-                                  will stop taking process's  F means modify
 
-v xcf,
-```
+GLOBAL        : This dataset holds info abuot the state of the installation
+                process.
+CSI           : GLOBAL zone, Dzone, Tzone
 
-multi line WTO   - when a command write's to the console usually each line ends
-with 210 address space.
-sys1.uans? to set in racf some config
+Dzone         : a Vsam ds that records all the changes in DLIB pds.
 
-Dinamic Address translation   =  the component that translats virtual storage
-                                 to real storage
+DLIB          : Distrubution Laibrary, a PDS that holds the source code objects
+                of the new updates. when you ACCEPT the updates from PTS it
+                over rides the existing source code in DLIB.
+                **DLIB's elements**:
+
+
+SYSGEN        : Generates new target laibrary from the DLIB's elements.
+
+
+TARGETzone    : a Vsam (_KSDS_) ds that records all the changes in TARGETlib pds
+
+TARGETlib     : a PDS ds that you APPLY the new updates from PTS.
+
+MCS           : Modification Control Statments
+
+PTS           : Temporary Storage, a PDS dataset that holds all the update
+                requests & code fixes or patches.
+
+GLOBALzone    : Holds the SMPPTS & pointers to the targetLib & its zone, distroZone's
+
+SMPPTS        : holds all the sysmods. (_system modification's_)
+
+CSI           : a name for all the zones as a whole, can implement
+                CSI with more then one file. type: vsam _KSDS_
+
+SYSMOD        : paches or fixes that is uploaded to the PTS
+smp/e sysmod's element packaging:
+
+    1. APAR        : small fixes & Zapping modules. (_modules fixes usulley_)
+    2. PTF         : Preventing service
+    3. FUNCTION    : a service or a application.
+    4. USERMOD     : if you want to package your app that you builde.
+
+
+IEWL          : Binder & linkige editor. it's an alias for `IEWBLINK`
+                every
+
+
+SMP/E COMMANDS:
+
+- SET `SET BOUNDARY(GLOBAL) .`
+
+SVC           :Storage Area Network (SAN) volume controller (SVC) usage
+               is a module that has autherization to do stuff in the OS
+
+
+
+
+

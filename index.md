@@ -1,22 +1,26 @@
 
+## Miscellaneious
+- How to ask a [question](question) the right way
 
-##  TSO/ISPF
-
-##  [CICS](CICS) =
-
-##  [REXX](REXX)
-
-##  ALGORITHMS
-
-
-## [Db2](Db2) (shay miler martze)
-
-
-## mvs : multiple virtual systems
-# ecsa: shard space in defaults
-
-
-# [IBM SYSTEMS](IBM-2022-SYSTEMS)
+## IBM ECOSYSTEM
+- [CICS](CICS)
+- [REXX](REXX)
+- [Db2](Db2) (shay miler martze)
+- [IBM SYSTEMS](IBM-2022-SYSTEMS)
 
 # Open Source Software
-- [guacamole](guacamole)    : remote desktops
+- [guacamole](guacamole)
+- [READ ONLY USB](READ-ONLY-USB)
+- [FZF](FZF)
+- [Hugo](Hugo)
+- [VM's](VM's)
+
+- [Class blue tech](Class-blue-tech)
+- [clipBoard](clipBoard)
+
+# [IT Class](IT-Class)
+
+# [Networking](Networking)
+
+[criers](criers)
+
